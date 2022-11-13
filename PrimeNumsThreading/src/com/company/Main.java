@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -84,7 +85,6 @@ public class Main {
 
         // Function called by producer thread
         public void produce(long N,int buff) throws InterruptedException {
-
             while (true) {
                 synchronized (this) {
 
@@ -94,6 +94,7 @@ public class Main {
                     for (int i = 1; i <= N; i++) {
                         if (isPrime(i)) {
                             list.add(i);
+                            System.out.println("produced: " + i);
                         }
                     }
 
@@ -115,8 +116,12 @@ public class Main {
 
                     // to retrieve the first job in the list
                     int val = list.removeFirst();
+                    System.out.println("consumed: " + val);
+
                     try{
-                        FileWriter writer = new FileWriter("./"+fileName);
+//                        FileWriter writer = new FileWriter("./"+fileName);
+                        BufferedWriter writer = new BufferedWriter(
+                                new FileWriter("./"+fileName, true));
                         writer.write(val + ", ");
                         writer.close();
                     }
