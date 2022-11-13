@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.io.FileWriter;
+
 public class Main {
     public static void main(String[] args)
             throws InterruptedException {
@@ -21,7 +22,7 @@ public class Main {
             @Override
             public void run() {
                 try {
-                    pc.produce(N,capacity);
+                    pc.produce(N, capacity);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -82,28 +83,29 @@ public class Main {
 
             return true;
         }
-
+//        boolean khlast = false;
         // Function called by producer thread
-        public void produce(long N,int buff) throws InterruptedException {
-            int max = -1;
-            while (true){
+        public void produce(long N, int buff) throws InterruptedException {
+            int value = 2;
+            while (true) {
                 synchronized (this) {
 
                     while (list.size() == buff)
                         wait();
 
-                    for (int i = 1; i <= N; i++) {
-                        if (isPrime(i)) {
-                            if(i < max){
-                                return;
-                            }
-                            list.add(i);
-                            System.out.println("produced: " + i);
-                            if(max < i){
-                                max = i;
-                            }
-                        }
+//                    for (int i = 1; i <= N; i++) {
+                    if (isPrime(value)) {
+                        list.add(value);
+                        System.out.println("produced: " + value);
                     }
+                    if(value+1 >=N){
+//                        khlast=true;
+                        break;
+                    }
+                    else{
+                        value++;
+                    }
+//                    }
 
                     notify();
 
@@ -125,16 +127,16 @@ public class Main {
                     int val = list.removeFirst();
                     System.out.println("consumed: " + val);
 
-                    try{
+                    try {
                         BufferedWriter writer = new BufferedWriter(
-                                new FileWriter("./"+fileName, true));
-                        writer.write("\""+val+"\", ");
+                                new FileWriter("./" + fileName, true));
+                        writer.write("\"" + val + "\", ");
                         writer.close();
-                    }
-                    catch(IOException e){
+                    } catch (IOException e) {
                         System.out.println("An error occurred.");
                         e.printStackTrace();
                     }
+//                    if(khlast)break;
 //                    System.out.println("Consumer consumed-"
 //                            + val);
 
