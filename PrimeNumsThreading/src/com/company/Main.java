@@ -85,7 +85,8 @@ public class Main {
 
         // Function called by producer thread
         public void produce(long N,int buff) throws InterruptedException {
-            while (true) {
+            int max = -1;
+            while (true){
                 synchronized (this) {
 
                     while (list.size() == buff)
@@ -93,14 +94,20 @@ public class Main {
 
                     for (int i = 1; i <= N; i++) {
                         if (isPrime(i)) {
+                            if(i < max){
+                                return;
+                            }
                             list.add(i);
                             System.out.println("produced: " + i);
+                            if(max < i){
+                                max = i;
+                            }
                         }
                     }
 
                     notify();
 
-                    Thread.sleep(1000);
+//                    Thread.sleep(1000);
                 }
             }
         }
@@ -119,10 +126,9 @@ public class Main {
                     System.out.println("consumed: " + val);
 
                     try{
-//                        FileWriter writer = new FileWriter("./"+fileName);
                         BufferedWriter writer = new BufferedWriter(
                                 new FileWriter("./"+fileName, true));
-                        writer.write(val + ", ");
+                        writer.write("\""+val+"\", ");
                         writer.close();
                     }
                     catch(IOException e){
@@ -136,7 +142,7 @@ public class Main {
                     notify();
 
                     // and sleep
-                    Thread.sleep(1000);
+//                    Thread.sleep(1000);
                 }
             }
         }
