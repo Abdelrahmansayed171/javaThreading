@@ -1,26 +1,58 @@
 package com.company;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
-public class GUI {
-    public static void main(String args[]){
-        JFrame frame = new JFrame("Prime Producer");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400,600);
-        JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        JLabel label = new JLabel("N:");
-        JTextField tf = new JTextField(8); // accepts upto 10 characters
-        panel1.add(label); // Components Added using Flow Layout
-        panel1.add(tf);
-        JLabel label2 = new JLabel("Buffer Size:");
-        JTextField tf2 = new JTextField(8); // accepts upto 10 characters
-        panel1.add(label2); // Components Added using Flow Layout
-        panel1.add(tf2);
+public class GUI extends JFrame{
+    JLabel l1, l2, l3, l4;  //all labels for textField
+    JTextField tf1, tf2;   // others fields
+    JButton btn1;  //buttons for signup and clear
+    JTextField p1;  // password fields
 
-        frame.getContentPane().add(BorderLayout.NORTH, panel1);
-        frame.setVisible(true);
+
+    GUI()
+    {
+        setSize(400, 500);
+        setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Assignment#1");
+        l1 = new JLabel("Creating Primes by multi-Threading");
+//        l1.setForeground(Color.blue);
+        l1.setFont(new Font("Serif", Font.BOLD, 20));
+        l2 = new JLabel("N:");
+        l3 = new JLabel("Buffer Size:");
+        l4 = new JLabel("Output File:");
+        tf1 = new JTextField();
+        tf2 = new JTextField();
+        p1 = new JTextField();
+        btn1 = new JButton("Process");
+        l1.setBounds(20, 30, 400, 30);
+        l2.setBounds(20, 70, 200, 30);
+        l3.setBounds(20, 110, 200, 30);
+        l4.setBounds(20, 150, 200, 30);
+        tf1.setBounds(100, 70, 200, 30);
+        tf2.setBounds(100, 110, 200, 30);
+        p1.setBounds(100, 150, 200, 30);
+        btn1.setBounds(20, 200, 100, 30);
+        add(l1);
+        add(l2);
+        add(tf1);
+        add(l3);
+        add(tf2);
+        add(l4);
+        add(p1);
+        add(btn1);
+        getContentPane().setBackground(Color.GRAY);
+
+        setVisible(true);
     }
+    public static void main(String args[])
+    {
+        new GUI();
+    }
+
 }
