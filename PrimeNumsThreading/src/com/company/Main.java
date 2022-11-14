@@ -72,6 +72,82 @@ public class Main {
         ;
 
 
+        boolean isPrime(int n) {
+            // Corner case
+            if (n <= 1)
+                return false;
 
+            // Check from 2 to n-1
+            for (int i = 2; i < n; i++)
+                if (n % i == 0)
+                    return false;
 
+            return true;
+        }
+        //        boolean khlast = false;
+        // Function called by producer thread
+        public void produce(long N, int buff) throws InterruptedException {
+            int value = 2;
+            while (true) {
+                synchronized (this) {
+
+                    while (list.size() == buff)
+                        wait();
+
+//                    for (int i = 1; i <= N; i++) {
+                    if (isPrime(value)) {
+                        list.add(value);
+                        System.out.println("produced: " + value);
+                    }
+                    if(value+1 >=N){
+//                        khlast=true;
+                        break;
+                    }
+                    else{
+                        value++;
+                    }
+//                    }
+
+                    notify();
+
+//                    Thread.sleep(1000);
+                }
+            }
+        }
+
+        // Function called by consumer thread
+        public void consume(String fileName) throws InterruptedException {
+            while (true) {
+                synchronized (this) {
+                    // consumer thread waits while list
+                    // is empty
+                    while (list.size() == 0)
+                        wait();
+
+                    // to retrieve the first job in the list
+                    int val = list.removeFirst();
+                    System.out.println("consumed: " + val);
+
+                    try {
+                        BufferedWriter writer = new BufferedWriter(
+                                new FileWriter("./" + fileName, true));
+                        writer.write("\"" + val + "\", ");
+                        writer.close();
+                    } catch (IOException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    }
+//                    if(khlast)break;
+//                    System.out.println("Consumer consumed-"
+//                            + val);
+
+                    // Wake up producer thread
+                    notify();
+
+                    // and sleep
+//                    Thread.sleep(1000);
+                }
+            }
+        }
+    }
 }
