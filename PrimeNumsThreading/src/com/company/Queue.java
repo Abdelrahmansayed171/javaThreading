@@ -26,22 +26,24 @@ public class Queue {
 
         return true;
     }
-
+    public static int max,cnt = 0;
+    public static boolean khlast = false;
     public static void produce() throws InterruptedException {
         int value = 2;
         while (true) {
             synchronized(Queue.class) {
-
                 while (list.size() == buff)
                     Queue.class.wait();
 
 //                    for (int i = 1; i <= N; i++) {
                 if (isPrime(value)) {
+                    max = value;
                     list.add(value);
                     System.out.println("produced: " + value);
                 }
                 if (value + 1 >= N) {
-//                        khlast=true;
+                        Thread.yield();
+                        khlast = true;
                     break;
                 } else {
                     value++;
@@ -69,12 +71,16 @@ public class Queue {
                     BufferedWriter writer = new BufferedWriter(
                             new FileWriter("./" + fileName, true));
                     writer.write("\"" + val + "\", ");
+                    cnt++;
                     writer.close();
                 } catch (IOException e) {
                     System.out.println("An error occurred.");
                     e.printStackTrace();
                 }
-
+                if(val == max && khlast){
+                    Thread.yield();
+                    break;
+                }
                 Queue.class.notify();
 
 //                    Thread.sleep(1000);

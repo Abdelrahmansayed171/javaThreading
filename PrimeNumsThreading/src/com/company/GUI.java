@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class GUI extends JFrame implements ActionListener {
-    JLabel l1, l2, l3, l4;  //all labels for textField
+    JLabel l1, l2, l3, l4,max,num,time,maxv,numv;  //all labels for textField
     JTextField tf1, tf2;   // others fields
     JButton btn1;  //buttons for signup and clear
     JTextField p1;  // password fields
@@ -16,7 +16,7 @@ public class GUI extends JFrame implements ActionListener {
 
     GUI()
     {
-        setSize(400, 500);
+        setSize(450, 500);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Assignment#1");
@@ -28,7 +28,7 @@ public class GUI extends JFrame implements ActionListener {
         tf1 = new JTextField();
         tf2 = new JTextField();
         p1 = new JTextField();
-        btn1 = new JButton("Process");
+        btn1 = new JButton("Start Producer");
         l1.setBounds(20, 30, 400, 30);
         l2.setBounds(20, 70, 200, 30);
         l3.setBounds(20, 110, 200, 30);
@@ -36,7 +36,7 @@ public class GUI extends JFrame implements ActionListener {
         tf1.setBounds(100, 70, 200, 30);
         tf2.setBounds(100, 110, 200, 30);
         p1.setBounds(100, 150, 200, 30);
-        btn1.setBounds(20, 200, 100, 30);
+        btn1.setBounds(20, 200, 250, 30);
         add(l1);
         add(l2);
         add(tf1);
@@ -72,6 +72,32 @@ public class GUI extends JFrame implements ActionListener {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
+        max = new JLabel("the largest prime number:");
+        num = new JLabel("# of elements (prime number) generated:");
+        time = new JLabel("time elapsed since the start of processing:");
+        String s = String.valueOf(Queue.max);
+        maxv = new JLabel(s);
+        String tmp = String.valueOf(Queue.cnt);
+        numv = new JLabel(tmp);
+        max.setBounds(10,250,300,30);
+        num.setBounds(10,280,300,30);
+        time.setBounds(10,310,300,30);
+        maxv.setBounds(320,250,100,30);
+        numv.setBounds(320,280,100,30);
+
+        max.setFont(new Font("Serif", Font.BOLD, 15));
+        num.setFont(new Font("Serif", Font.BOLD, 15));
+        time.setFont(new Font("Serif", Font.BOLD, 15));
+        maxv.setFont(new Font("Serif", Font.BOLD, 15));
+        numv.setFont(new Font("Serif", Font.BOLD, 15));
+
+        this.add(max);
+        this.add(num);
+        this.add(time);
+        this.add(maxv);
+        this.add(numv);
+        setVisible(false);
+        setVisible(true);
     }
 
     public static void main(String args[])
