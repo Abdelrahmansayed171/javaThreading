@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class GUI extends JFrame implements ActionListener {
-    JLabel l1, l2, l3, l4,max,num,time,maxv,numv;  //all labels for textField
+    JLabel l1, l2, l3, l4,max,num,time,maxv,numv,timev;  //all labels for textField
     JTextField tf1, tf2;   // others fields
     JButton btn1;  //buttons for signup and clear
     JTextField p1;  // password fields
@@ -59,6 +59,7 @@ public class GUI extends JFrame implements ActionListener {
         Queue.N = N;
         Queue.buff = capacity;
         Queue.fileName = fileName;
+        long start = System.currentTimeMillis();
         Thread producer = new Producer();
 
         Thread consumer = new Consumer();
@@ -72,6 +73,8 @@ public class GUI extends JFrame implements ActionListener {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
+        long end = System.currentTimeMillis();
+        long elapsedTime = end - start;
         max = new JLabel("the largest prime number:");
         num = new JLabel("# of elements (prime number) generated:");
         time = new JLabel("time elapsed since the start of processing:");
@@ -79,23 +82,28 @@ public class GUI extends JFrame implements ActionListener {
         maxv = new JLabel(s);
         String tmp = String.valueOf(Queue.cnt);
         numv = new JLabel(tmp);
+        String times = String.valueOf(elapsedTime);
+        timev = new JLabel(times + " ms");
         max.setBounds(10,250,300,30);
         num.setBounds(10,280,300,30);
         time.setBounds(10,310,300,30);
         maxv.setBounds(320,250,100,30);
         numv.setBounds(320,280,100,30);
+        timev.setBounds(320,310,100,30);
 
         max.setFont(new Font("Serif", Font.BOLD, 15));
         num.setFont(new Font("Serif", Font.BOLD, 15));
         time.setFont(new Font("Serif", Font.BOLD, 15));
         maxv.setFont(new Font("Serif", Font.BOLD, 15));
         numv.setFont(new Font("Serif", Font.BOLD, 15));
+        timev.setFont(new Font("Serif", Font.BOLD, 15));
 
         this.add(max);
         this.add(num);
         this.add(time);
         this.add(maxv);
         this.add(numv);
+        this.add(timev);
         setVisible(false);
         setVisible(true);
     }
