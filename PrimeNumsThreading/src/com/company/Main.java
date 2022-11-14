@@ -48,6 +48,7 @@ public class Main {
 
         t1.join();
         t2.join();
+
     }
 
 
@@ -83,7 +84,7 @@ public class Main {
 
             return true;
         }
-//        boolean khlast = false;
+        boolean khlast = false;
         // Function called by producer thread
         public void produce(long N, int buff) throws InterruptedException {
             int value = 2;
@@ -99,7 +100,7 @@ public class Main {
                         System.out.println("produced: " + value);
                     }
                     if(value+1 >=N){
-//                        khlast=true;
+                        khlast=true;
                         break;
                     }
                     else{
@@ -109,7 +110,7 @@ public class Main {
 
                     notify();
 
-//                    Thread.sleep(1000);
+                    Thread.sleep(1000);
                 }
             }
         }
@@ -136,7 +137,6 @@ public class Main {
                         System.out.println("An error occurred.");
                         e.printStackTrace();
                     }
-//                    if(khlast)break;
 //                    System.out.println("Consumer consumed-"
 //                            + val);
 
@@ -144,7 +144,8 @@ public class Main {
                     notify();
 
                     // and sleep
-//                    Thread.sleep(1000);
+                    Thread.sleep(300);
+                    if(khlast)break;
                 }
             }
         }
