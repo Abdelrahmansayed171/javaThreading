@@ -1,13 +1,13 @@
 package com.company;
 
+import java.awt.event.*;
 import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class GUI extends JFrame{
+public class GUI extends JFrame implements ActionListener {
     JLabel l1, l2, l3, l4;  //all labels for textField
     JTextField tf1, tf2;   // others fields
     JButton btn1;  //buttons for signup and clear
@@ -21,7 +21,6 @@ public class GUI extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Assignment#1");
         l1 = new JLabel("Creating Primes by multi-Threading");
-//        l1.setForeground(Color.blue);
         l1.setFont(new Font("Serif", Font.BOLD, 20));
         l2 = new JLabel("N:");
         l3 = new JLabel("Buffer Size:");
@@ -47,12 +46,36 @@ public class GUI extends JFrame{
         add(p1);
         add(btn1);
         getContentPane().setBackground(Color.GRAY);
-
+        btn1.addActionListener(this);
         setVisible(true);
     }
+    @Override
+    public void actionPerformed(ActionEvent e){
+        String s1 = tf1.getText();
+        String s2 = tf2.getText();
+        String fileName = p1.getText();
+        long N = Long.parseLong(s1);
+        int capacity = Integer.parseInt(s2);
+        Queue.N = N;
+        Queue.buff = capacity;
+        Queue.fileName = fileName;
+        Thread producer = new Producer();
+
+        Thread consumer = new Consumer();
+
+        producer.start();
+        consumer.start();
+
+        try {
+            producer.join();
+            consumer.join();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void main(String args[])
     {
         new GUI();
     }
-
 }
