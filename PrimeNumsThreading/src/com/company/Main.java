@@ -11,18 +11,13 @@ public class Main {
         int capacity = scanner.nextInt();
         Scanner scr = new Scanner(System.in);
         String fileName = scr.nextLine();
-        Queue.N = N;
-        Queue.buff = capacity;
-        Queue.fileName = fileName;
-        Thread producer = new Producer();
+        Producer producer = new Producer(capacity,N);
+        Consumer consumer = new Consumer(producer,fileName);
 
-        Thread consumer = new Consumer();
-
+        producer.setName("Producer-1");
+        consumer.setName("Consumer-1");
         producer.start();
         consumer.start();
-
-        producer.join();
-        consumer.join();
 
     }
 

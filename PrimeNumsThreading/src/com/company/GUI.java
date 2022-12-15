@@ -56,14 +56,12 @@ public class GUI extends JFrame implements ActionListener {
         String fileName = p1.getText();
         long N = Long.parseLong(s1);
         int capacity = Integer.parseInt(s2);
-        Queue.N = N;
-        Queue.buff = capacity;
-        Queue.fileName = fileName;
+        Producer producer = new Producer(capacity,N);
+        Consumer consumer = new Consumer(producer,fileName);
         long start = System.currentTimeMillis();
-        Thread producer = new Producer();
 
-        Thread consumer = new Consumer();
-
+        producer.setName("Producer-1");
+        consumer.setName("Consumer-1");
         producer.start();
         consumer.start();
 
@@ -78,9 +76,9 @@ public class GUI extends JFrame implements ActionListener {
         max = new JLabel("the largest prime number:");
         num = new JLabel("# of elements (prime number) generated:");
         time = new JLabel("time elapsed since the start of processing:");
-        String s = String.valueOf(Queue.max);
+        String s = String.valueOf(consumer.getMax());
         maxv = new JLabel(s);
-        String tmp = String.valueOf(Queue.cnt);
+        String tmp = String.valueOf(consumer.getCnt());
         numv = new JLabel(tmp);
         String times = String.valueOf(elapsedTime);
         timev = new JLabel(times + " ms");
